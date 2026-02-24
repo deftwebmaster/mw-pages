@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marion Willis</title>
+    <meta name="description" content="Deliberate projects. Built to be worthy. Independent ventures under one name.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Lexend:wght@200;300;400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-bg: #0a0a0a;
+            --color-fg: #e8e4df;
+            --color-muted: #6b6560;
+            --color-accent: #c4a882;
+            --color-accent-dim: #8a7560;
+            --color-rule: #1e1c1a;
+            --font-display: 'Cormorant Garamond', Georgia, serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            background: var(--color-bg);
+            color: var(--color-fg);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Subtle grain texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-size: 256px 256px;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* Top accent line */
+        .accent-bar {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--color-accent-dim) 20%, var(--color-accent) 50%, var(--color-accent-dim) 80%, transparent 100%);
+            opacity: 0;
+            animation: fadeIn 1.5s ease 0.3s forwards;
+        }
+
+        /* Main content */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            position: relative;
+        }
+
+        .content {
+            text-align: center;
+            max-width: 720px;
+        }
+
+        /* Monogram mark */
+        .monogram {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 3.5rem;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.6s forwards;
+        }
+
+        .monogram-letter {
+            font-family: var(--font-display);
+            font-weight: 300;
+            font-size: 1.1rem;
+            letter-spacing: 0.3em;
+            color: var(--color-accent);
+            text-transform: uppercase;
+        }
+
+        .monogram-divider {
+            width: 32px;
+            height: 1px;
+            background: var(--color-accent-dim);
+        }
+
+        /* Name */
+        .name {
+            font-family: var(--font-display);
+            font-weight: 300;
+            font-size: clamp(3rem, 8vw, 6.5rem);
+            letter-spacing: 0.04em;
+            line-height: 1;
+            color: var(--color-fg);
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.9s forwards;
+        }
+
+        /* Decorative rule */
+        .rule {
+            width: 60px;
+            height: 1px;
+            background: var(--color-accent);
+            margin: 0 auto 2.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 1.2s forwards;
+        }
+
+        /* Tagline */
+        .tagline {
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-style: italic;
+            font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+            letter-spacing: 0.02em;
+            line-height: 1.6;
+            color: var(--color-fg);
+            opacity: 0;
+            animation: fadeUp 1s ease 1.4s forwards;
+        }
+
+        /* Subtitle */
+        .subtitle {
+            font-family: var(--font-body);
+            font-weight: 200;
+            font-size: clamp(0.72rem, 1.2vw, 0.82rem);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--color-muted);
+            margin-top: 3rem;
+            opacity: 0;
+            animation: fadeUp 1s ease 1.7s forwards;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2.5rem 2rem;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1s ease 2.2s forwards;
+        }
+
+        .footer-text {
+            font-family: var(--font-body);
+            font-weight: 200;
+            font-size: 0.65rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--color-muted);
+        }
+
+        .footer-dot {
+            display: inline-block;
+            width: 3px;
+            height: 3px;
+            background: var(--color-accent-dim);
+            border-radius: 50%;
+            margin: 0 0.8rem;
+            vertical-align: middle;
+        }
+
+        /* Ambient glow */
+        .glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(196, 168, 130, 0.04) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Corner accents */
+        .corner {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            pointer-events: none;
+            opacity: 0;
+            animation: fadeIn 1.5s ease 2s forwards;
+        }
+
+        .corner::before,
+        .corner::after {
+            content: '';
+            position: absolute;
+            background: var(--color-accent-dim);
+            opacity: 0.3;
+        }
+
+        .corner-tl { top: 2rem; left: 2rem; }
+        .corner-tl::before { top: 0; left: 0; width: 20px; height: 1px; }
+        .corner-tl::after { top: 0; left: 0; width: 1px; height: 20px; }
+
+        .corner-tr { top: 2rem; right: 2rem; }
+        .corner-tr::before { top: 0; right: 0; width: 20px; height: 1px; }
+        .corner-tr::after { top: 0; right: 0; width: 1px; height: 20px; }
+
+        .corner-bl { bottom: 2rem; left: 2rem; }
+        .corner-bl::before { bottom: 0; left: 0; width: 20px; height: 1px; }
+        .corner-bl::after { bottom: 0; left: 0; width: 1px; height: 20px; }
+
+        .corner-br { bottom: 2rem; right: 2rem; }
+        .corner-br::before { bottom: 0; right: 0; width: 20px; height: 1px; }
+        .corner-br::after { bottom: 0; right: 0; width: 1px; height: 20px; }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile refinements */
+        @media (max-width: 640px) {
+            main {
+                padding: 3rem 1.5rem;
+            }
+
+            .monogram {
+                margin-bottom: 2.5rem;
+            }
+
+            .name {
+                margin-bottom: 2rem;
+            }
+
+            .rule {
+                margin-bottom: 2rem;
+            }
+
+            .subtitle {
+                margin-top: 2.5rem;
+            }
+
+            .corner { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="accent-bar"></div>
+
+    <div class="glow"></div>
+
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+
+    <main>
+        <div class="content">
+            <div class="monogram">
+                <span class="monogram-letter">M</span>
+                <span class="monogram-divider"></span>
+                <span class="monogram-letter">W</span>
+            </div>
+
+            <h1 class="name">Marion Willis</h1>
+
+            <div class="rule"></div>
+
+            <p class="tagline">Deliberate projects. Built to be worthy.</p>
+
+            <p class="subtitle">Independent ventures under one name</p>
+        </div>
+    </main>
+
+    <footer>
+        <p class="footer-text">
+            Marion Willis
+            <span class="footer-dot"></span>
+            Est. 2026
+        </p>
+    </footer>
+
+    <!-- * lone wolf, quiet teeth | Matt Livingston -->
+</body>
+</html>
